@@ -39,10 +39,10 @@ struct Carta {
         scanf("%s", carta2.codigo);
 
         printf("Digite o Estado: ", carta2.estado);
-        scanf(" %c", &carta2.estado);
+        scanf(" %19[^\n]", &carta2.estado);
 
         printf("Digite o Nome da Cidade: ", carta2.nome_da_cidade);
-        scanf(" %49[^\n]", &carta2.nome_da_cidade);
+        scanf(" %19[^\n]", &carta2.nome_da_cidade);
 
         printf("Digite a população da cidade %s: ", carta2.codigo);
         scanf("%d", &carta2.populacao);
