@@ -2,8 +2,8 @@
 
 struct Carta {
     char codigo[4];
-    char estado[20];
-    char nome_da_cidade[20];
+    char estado;
+    char nome_da_cidade[50];
     int populacao;
     float area;
     float pib;
@@ -17,10 +17,10 @@ struct Carta {
         scanf("%s", carta1.codigo);
 
         printf("Digite o Estado: ");
-        scanf(" %19[^\n]", &carta1.estado);
+        scanf(" %c", &carta1.estado);
 
         printf("Digite o Nome da Cidade: ");
-        scanf(" %19[^\n]", &carta1.nome_da_cidade);
+        scanf(" %49[^\n]", &carta1.nome_da_cidade);
 
         printf("Digite a população da cidade %s: ", carta1.codigo);
         scanf("%d", &carta1.populacao);
@@ -39,7 +39,7 @@ struct Carta {
         scanf("%s", carta2.codigo);
 
         printf("Digite o Estado: ", carta2.estado);
-        scanf(" %19[^\n]", &carta2.estado);
+        scanf(" %c", &carta2.estado);
 
         printf("Digite o Nome da Cidade: ", carta2.nome_da_cidade);
         scanf(" %19[^\n]", &carta2.nome_da_cidade);
