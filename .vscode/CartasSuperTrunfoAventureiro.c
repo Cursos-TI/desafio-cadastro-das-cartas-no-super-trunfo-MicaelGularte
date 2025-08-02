@@ -1,9 +1,8 @@
 #include <stdio.h>
 #include <string.h>
 
-
 struct Carta {
-    char codigo[6]; 
+    char codigo[6];
     char estado[50];
     char nome[50];
     int populacao;
@@ -11,8 +10,8 @@ struct Carta {
     float pib;
     int pontosTuristicos;
     float densidadeDemografica;
+    float pibPerCapita;
 };
-
 
 void calcularDensidade(struct Carta *carta) {
     if (carta->area > 0)
@@ -21,17 +20,27 @@ void calcularDensidade(struct Carta *carta) {
         carta->densidadeDemografica = 0;
 }
 
+void calcularPibPerCapita(struct Carta *carta) {
+    if (carta->populacao > 0)
+        carta->pibPerCapita = (carta->pib * 1000000000.0f) / (float)carta->populacao;
+    else
+        carta->pibPerCapita = 0;
+}
+
+void calcularAtributosDerivados(struct Carta *carta) {
+    calcularDensidade(carta);
+    calcularPibPerCapita(carta);
+}
 
 void limparBuffer() {
     while (getchar() != '\n');
 }
 
-
 void preencherCarta(struct Carta *carta, int numero) {
     printf("\n=== Preenchendo dados da Carta %d ===\n", numero);
 
     printf("Código da carta (ex: SP01): ");
-    scanf("%s", carta->codigo);  
+    scanf("%s", carta->codigo);
 
     limparBuffer();
 
@@ -55,9 +64,8 @@ void preencherCarta(struct Carta *carta, int numero) {
     printf("Número de pontos turísticos: ");
     scanf("%d", &carta->pontosTuristicos);
 
-    calcularDensidade(carta);
+    calcularAtributosDerivados(carta);
 }
-
 
 void compararCartas(struct Carta c1, struct Carta c2, int opcao) {
     printf("\nComparando cartas:\n");
