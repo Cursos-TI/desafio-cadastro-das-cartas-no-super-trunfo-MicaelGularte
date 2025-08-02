@@ -1,9 +1,9 @@
 #include <stdio.h>
 #include <string.h>
 
-// Estrutura completa da carta
+
 struct Carta {
-    int codigo;
+    char codigo[6]; 
     char estado[50];
     char nome[50];
     int populacao;
@@ -13,25 +13,26 @@ struct Carta {
     float densidadeDemografica;
 };
 
-// Função para calcular a densidade demográfica com verificação
+
 void calcularDensidade(struct Carta *carta) {
     if (carta->area > 0)
         carta->densidadeDemografica = carta->populacao / carta->area;
     else
-        carta->densidadeDemografica = 0; // ou -1, se quiser sinalizar erro
+        carta->densidadeDemografica = 0;
 }
 
-// Função para limpar o buffer do teclado
+
 void limparBuffer() {
     while (getchar() != '\n');
 }
 
-// Função para preencher uma carta
+
 void preencherCarta(struct Carta *carta, int numero) {
     printf("\n=== Preenchendo dados da Carta %d ===\n", numero);
 
-    printf("Código da carta: ");
-    scanf("%d", &carta->codigo);
+    printf("Código da carta (ex: SP01): ");
+    scanf("%s", carta->codigo);  
+
     limparBuffer();
 
     printf("Estado (ou região): ");
@@ -57,11 +58,11 @@ void preencherCarta(struct Carta *carta, int numero) {
     calcularDensidade(carta);
 }
 
-// Função para comparar e mostrar o resultado
+
 void compararCartas(struct Carta c1, struct Carta c2, int opcao) {
     printf("\nComparando cartas:\n");
-    printf("País 1: %s\n", c1.nome);
-    printf("País 2: %s\n", c2.nome);
+    printf("Carta 1 - Código: %s | País: %s\n", c1.codigo, c1.nome);
+    printf("Carta 2 - Código: %s | País: %s\n", c2.codigo, c2.nome);
 
     switch (opcao) {
         case 1:
