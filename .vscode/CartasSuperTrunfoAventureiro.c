@@ -1,8 +1,10 @@
 #include <stdio.h>
 #include <string.h>
 
-
+// Estrutura completa da carta
 struct Carta {
+    int codigo;
+    char estado[50];
     char nome[50];
     int populacao;
     float area;
@@ -11,7 +13,51 @@ struct Carta {
     float densidadeDemografica;
 };
 
+// Função para calcular a densidade demográfica com verificação
+void calcularDensidade(struct Carta *carta) {
+    if (carta->area > 0)
+        carta->densidadeDemografica = carta->populacao / carta->area;
+    else
+        carta->densidadeDemografica = 0; // ou -1, se quiser sinalizar erro
+}
 
+// Função para limpar o buffer do teclado
+void limparBuffer() {
+    while (getchar() != '\n');
+}
+
+// Função para preencher uma carta
+void preencherCarta(struct Carta *carta, int numero) {
+    printf("\n=== Preenchendo dados da Carta %d ===\n", numero);
+
+    printf("Código da carta: ");
+    scanf("%d", &carta->codigo);
+    limparBuffer();
+
+    printf("Estado (ou região): ");
+    fgets(carta->estado, sizeof(carta->estado), stdin);
+    carta->estado[strcspn(carta->estado, "\n")] = '\0';
+
+    printf("Nome do país: ");
+    fgets(carta->nome, sizeof(carta->nome), stdin);
+    carta->nome[strcspn(carta->nome, "\n")] = '\0';
+
+    printf("População: ");
+    scanf("%d", &carta->populacao);
+
+    printf("Área (em km²): ");
+    scanf("%f", &carta->area);
+
+    printf("PIB (em bilhões): ");
+    scanf("%f", &carta->pib);
+
+    printf("Número de pontos turísticos: ");
+    scanf("%d", &carta->pontosTuristicos);
+
+    calcularDensidade(carta);
+}
+
+// Função para comparar e mostrar o resultado
 void compararCartas(struct Carta c1, struct Carta c2, int opcao) {
     printf("\nComparando cartas:\n");
     printf("País 1: %s\n", c1.nome);
@@ -84,14 +130,15 @@ void compararCartas(struct Carta c1, struct Carta c2, int opcao) {
 }
 
 int main() {
-    
-    struct Carta pais1 = {"Brasil", 214000000, 8515767.0, 1800.0, 15, 25.1};
-    struct Carta pais2 = {"Japão", 126000000, 377975.0, 5000.0, 20, 333.4};
-
+    struct Carta pais1, pais2;
     int opcao;
 
     printf("=== Super Trunfo de Países ===\n");
-    printf("Escolha o atributo para comparar:\n");
+
+    preencherCarta(&pais1, 1);
+    preencherCarta(&pais2, 2);
+
+    printf("\nEscolha o atributo para comparar:\n");
     printf("1 - População\n");
     printf("2 - Área\n");
     printf("3 - PIB\n");
